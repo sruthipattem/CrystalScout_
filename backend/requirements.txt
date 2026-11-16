@@ -1,0 +1,12 @@
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+pwdlib[argon2]>=0.2
+python-jose[cryptography]>=3.3
+pandas>=2.2
+numpy>=1.26
+scikit-learn>=1.4
+matminer>=0.9
+pymatgen>=2024.5
+mp-api>=0.41
+joblib>=1.4

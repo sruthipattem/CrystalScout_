@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#29264B">
+    <title>CrystalScout</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="workflow.css">
+</head>
+<body>
+    <main class="auth-shell" id="authShell">
+        <section class="auth-card" id="loginPage" aria-labelledby="loginTitle">
+            <a class="brand auth-brand" href="#login" aria-label="CrystalScout home"><span class="brand-mark">C</span><span>CrystalScout</span></a>
+            <p class="eyebrow auth-eyebrow">MATERIAL DISCOVERY PLATFORM</p>
+            <h1 id="loginTitle">Welcome back</h1>
+            <p class="auth-subtitle">Sign in to continue exploring materials.</p>
+            <form id="loginForm">
+                <div class="input-group"><label for="loginEmail">Email</label><input type="email" id="loginEmail" placeholder="name@example.com" autocomplete="email" required></div>
+                <div class="input-group"><label for="loginPassword">Password</label><div class="password-box"><input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password" required><button type="button" class="toggle-password" data-target="loginPassword">Show</button></div></div>
+                <button type="submit" class="main-btn">Login</button>
+                <p class="message" id="loginMessage" role="status" aria-live="polite"></p>
+            </form>
+            <p class="switch-text">Don't have an account? <a href="#register" id="showRegister">Register</a></p>
+        </section>
+
+        <section class="auth-card hidden" id="registerPage" aria-labelledby="registerTitle">
+            <a class="brand auth-brand" href="#login" aria-label="CrystalScout home"><span class="brand-mark">C</span><span>CrystalScout</span></a>
+            <p class="eyebrow auth-eyebrow">MATERIAL DISCOVERY PLATFORM</p>
+            <h1 id="registerTitle">Create your account</h1>
+            <p class="auth-subtitle">A simple account gives you access to your workspace.</p>
+            <form id="registerForm">
+                <div class="input-group"><label for="registerName">Full name</label><input type="text" id="registerName" placeholder="Enter your name" autocomplete="name" required></div>
+                <div class="input-group"><label for="registerEmail">Email</label><input type="email" id="registerEmail" placeholder="name@example.com" autocomplete="email" required></div>
+                <div class="input-group"><label for="registerPassword">Password</label><div class="password-box"><input type="password" id="registerPassword" placeholder="Create a password" autocomplete="new-password" required><button type="button" class="toggle-password" data-target="registerPassword">Show</button></div></div>
+                <div class="password-rules"><p id="lengthRule">○ At least 8 characters</p><p id="letterRule">○ At least one alphabet</p><p id="numberRule">○ At least one number</p><p id="specialRule">○ At least one special character</p></div>
+                <div class="input-group"><label for="confirmPassword">Confirm password</label><div class="password-box"><input type="password" id="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password" required><button type="button" class="toggle-password" data-target="confirmPassword">Show</button></div></div>
+                <button type="submit" class="main-btn">Create account</button><p class="message" id="registerMessage" role="status" aria-live="polite"></p>
+            </form>
+            <p class="switch-text">Already have an account? <a href="#login" id="showLogin">Login</a></p>
+        </section>
+    </main>
+
+    <div class="app-shell hidden" id="appShell">
+        <aside class="sidebar" id="sidebar">
+            <a class="brand sidebar-brand" href="#dashboard" aria-label="CrystalScout dashboard"><span class="brand-mark">C</span><span>CrystalScout</span></a>
+            <p class="nav-caption">WORKSPACE</p>
+            <nav class="main-nav" aria-label="Main navigation">
+                <a class="nav-link active" href="#dashboard" data-page="dashboard"><span class="nav-icon">⌂</span>Dashboard</a>
+                <a class="nav-link" href="#screen" data-page="screen"><span class="nav-icon">＋</span>Screen a material</a>
+                <a class="nav-link" href="#history" data-page="history"><span class="nav-icon">◷</span>Screening history</a>
+                <a class="nav-link" href="#candidates" data-page="candidates"><span class="nav-icon">↗</span>Candidate ranking</a>
+                <a class="nav-link" href="#models" data-page="models"><span class="nav-icon">◈</span>Models</a>
+            </nav>
+            <div class="sidebar-footer"><div class="sidebar-note"><span class="note-dot"></span><span>Research workspace</span></div><button id="logoutButton" class="logout-button" type="button"><span class="nav-icon">↪</span>Sign out</button></div>
+        </aside>
+        <main class="main-area">
+            <header class="topbar"><button class="menu-toggle" id="menuToggle" type="button" aria-label="Toggle navigation" aria-expanded="false">☰</button><div class="breadcrumbs"><span>Workspace</span><span class="crumb-separator">/</span><strong id="pageCrumb">Dashboard</strong></div><div class="user-area"><span class="user-label" id="userName">Researcher</span><span class="avatar" id="userInitial">R</span></div></header>
+            <div class="page-content">
+                <section class="page-view" id="dashboardView" data-view="dashboard">
+                    <div class="page-heading"><div><p class="eyebrow">OVERVIEW</p><h1 id="welcomeTitle">Welcome to CrystalScout</h1><p class="page-subtitle">Your workspace for exploring promising solid-state materials.</p></div><a class="button-primary" href="#screen" data-page="screen"><span>＋</span> Screen a material</a></div>
+                    <section class="welcome-banner"><div><p class="banner-kicker">MATERIAL DISCOVERY, MADE CLEAR</p><h2>Turn material data into a clearer next step.</h2><p>Run a screening when you are ready, then keep your results together in one workspace.</p><a class="banner-link" href="#screen" data-page="screen">Start a screening <span>→</span></a></div><div class="banner-art" aria-hidden="true"><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span><span class="crystal">◇</span><span class="spark spark-one">✦</span><span class="spark spark-two">·</span></div></section>
+                    <div class="section-heading"><div><h2>Workspace overview</h2><p>Activity and model information at a glance.</p></div></div>
+                    <section class="stats-grid" aria-label="Workspace overview statistics">
+                        <article class="stat-card"><span class="stat-icon lavender-icon">⌕</span><p class="stat-label">Predictions run</p><strong class="stat-value" id="predictionCount">0</strong><span class="stat-footnote">Your saved screening history</span></article>
+                        <article class="stat-card"><span class="stat-icon pale-icon">↗</span><p class="stat-label">Highest predicted conductivity</p><strong class="model-name" id="highestPrediction">—</strong><span class="stat-footnote">Across your saved screenings</span></article>
+                        <article class="stat-card model-card"><span class="stat-icon deep-icon">ET</span><p class="stat-label">Conductivity model</p><strong class="model-name">Extra Trees</strong><span class="stat-footnote">Continuous regression</span></article>
+                        <article class="stat-card model-card"><span class="stat-icon grey-icon">139</span><p class="stat-label">Model inputs</p><strong class="model-name">Composition + structure</strong><span class="stat-footnote">132 Magpie + 7 crystal features</span></article>
+                    </section>
+                    <div class="lower-grid"><section class="panel recent-panel"><div class="panel-heading"><div><h2>Recent screening</h2><p>Your latest saved material predictions.</p></div><a href="#history" data-page="history" class="text-link">View history <span>→</span></a></div><div class="table-wrap"><p class="form-hint">Sign in and screen a material to see results here.</p></div></section><aside class="panel tip-panel"><div class="tip-icon">✦</div><p class="eyebrow">READY WHEN YOU ARE</p><h2>Screen a new material</h2><p>Upload a CIF file or use a qualifying Materials Project ID.</p><a class="button-secondary" href="#screen" data-page="screen">Open material screening <span>→</span></a></aside></div>
+                    <p class="data-note">Predictions are screening estimates. The held-out test MAE is about 1.17 log₁₀ units, so use them to prioritize candidates rather than as exact conductivity measurements.</p>
+                </section>
+                <section class="page-view hidden" id="screenView" data-view="screen"><div class="page-heading"><div><p class="eyebrow">MATERIAL DISCOVERY</p><h1>Screen a material</h1><p class="page-subtitle">Use a Materials Project ID or upload a CIF so CrystalScout can read the crystal structure.</p></div></div><p class="inline-notice" id="modelNotice" role="status"></p><div class="screen-options"><section class="panel workflow-panel"><span class="workflow-step">OPTION 1 · MATERIALS PROJECT</span><h2>Screen a candidate by ID</h2><p>The material must pass the project band-gap and stability filters.</p><form id="mpForm" class="screen-form"><label for="materialId">Materials Project ID</label><div class="screen-input-row"><input id="materialId" name="material_id" placeholder="e.g. mp-149" required><button class="button-primary" type="submit">Predict <span>→</span></button></div></form></section><section class="panel workflow-panel"><span class="workflow-step">OPTION 2 · CRYSTAL FILE</span><h2>Upload a CIF structure</h2><p>CIF upload predicts from its composition and unit-cell structure.</p><form id="cifForm" class="screen-form"><label for="cifFile">Crystal structure file (.cif)</label><div class="screen-input-row"><input id="cifFile" name="file" type="file" accept=".cif,.mcif" required><button class="button-primary" type="submit">Predict <span>→</span></button></div></form></section></div><section class="panel result-panel hidden" id="predictionResult" aria-live="polite"></section><p class="data-note">The model predicts log₁₀ conductivity in S/cm. Its test error is about 1.17 log units (roughly a 15× factor), so treat results as a way to rank candidates.</p></section>
+                <section class="page-view hidden" id="historyView" data-view="history"><div class="page-heading"><div><p class="eyebrow">YOUR WORKSPACE</p><h1>Screening history</h1><p class="page-subtitle">Your material predictions, saved to this account.</p></div></div><section class="panel recent-panel"><div class="panel-heading"><div><h2>Saved predictions</h2><p>Sorted from most recent.</p></div></div><div id="historyContent"><p class="form-hint">Loading your history…</p></div></section></section>
+                <section class="page-view hidden" id="candidatesView" data-view="candidates"><div class="page-heading"><div><p class="eyebrow">MATERIALS PROJECT</p><h1>Candidate ranking</h1><p class="page-subtitle">Live MP materials that pass the project’s band-gap and stability filters, ranked by predicted conductivity.</p></div><button class="button-primary" id="refreshCandidates" type="button">Refresh candidates <span>↻</span></button></div><p class="inline-notice" id="candidateNotice" role="status">Loading candidates requires a trained model and an MP_API_KEY configured in the backend.</p><section class="panel recent-panel"><div class="table-wrap" id="candidateContent"></div></section><p class="data-note">Filters: band gap ≥ 0.5 eV and energy above hull ≤ 0.10 eV/atom. Ranking is an estimate, not experimental validation.</p></section>
+                <section class="page-view hidden" id="modelsView" data-view="models"><div class="page-heading"><div><p class="eyebrow">PREDICTION METHODS</p><h1>Models</h1><p class="page-subtitle">The selected CrystalScout conductivity prediction method.</p></div></div><div class="models-grid"><article class="panel model-detail"><span class="stat-icon deep-icon">ET</span><p class="eyebrow">REGRESSION</p><h2>Extra Trees</h2><p>An ensemble of decision trees predicts continuous log₁₀ ionic conductivity from a material's composition and crystal structure.</p></article><article class="panel model-detail"><span class="stat-icon pale-icon">139</span><p class="eyebrow">MODEL INPUTS</p><h2>132 + 7 features</h2><p>132 Magpie composition descriptors and seven structure values: space-group number, three lattice lengths and three lattice angles.</p></article></div><p class="data-note">The published held-out test MAE is 1.17 log₁₀ units (about a 15× factor in conductivity). Model outputs support candidate ranking; they are not precise measurements or experimental validation.</p></section>
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
