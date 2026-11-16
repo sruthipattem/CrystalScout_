@@ -1,13 +1,41 @@
 
 import sqlite3
+import os
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
-# Database file location
-DB_PATH = Path(__file__).resolve().parent / "crystalscout.db"
+
+def database_path() -> Path:
+    """Resolve a SQLite DATABASE_URL or use the local project database."""
+    database_url = os.getenv("DATABASE_URL", "").strip()
+    if not database_url:
+        return Path(__file__).resolve().parent / "crystalscout.db"
+
+    parsed = urlsplit(database_url)
+    if parsed.scheme.lower() != "sqlite" or parsed.netloc:
+        raise RuntimeError(
+            "DATABASE_URL must be a SQLite URL; PostgreSQL URLs are not supported by this SQLite backend."
+        )
+    raw_path = unquote(parsed.path)
+    if raw_path.startswith("//"):
+        raw_path = raw_path[1:]  # sqlite:////absolute/path.db
+    else:
+        raw_path = raw_path.lstrip("/")  # sqlite:///relative/path.db
+    if not raw_path:
+        raise RuntimeError("DATABASE_URL must identify a SQLite database file.")
+
+    path = Path(raw_path)
+    if not path.is_absolute():
+        path = Path(__file__).resolve().parent / path
+    return path
+
+
+DB_PATH = database_path()
 
 
 # Connect to the database
 def get_connection():
+    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
     connection = sqlite3.connect(DB_PATH)
     connection.row_factory = sqlite3.Row
     return connection

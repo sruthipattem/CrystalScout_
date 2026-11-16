@@ -1,4 +1,5 @@
 import io
+import os
 import re
 import sqlite3
 from typing import Annotated
@@ -24,13 +25,24 @@ app = FastAPI(
     version="2.0.0",
 )
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[
+APP_ENV = os.getenv("CRYSTALSCOUT_ENV", "production").strip().lower()
+frontend_origins = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv("FRONTEND_URL", "").split(",")
+    if origin.strip()
+]
+if "*" in frontend_origins:
+    raise RuntimeError("FRONTEND_URL must list explicit origins; wildcard CORS is not allowed.")
+if APP_ENV == "development":
+    frontend_origins.extend([
         "http://127.0.0.1:5500", "http://localhost:5500",
         "http://127.0.0.1:5501", "http://localhost:5501",
         "http://127.0.0.1:5502", "http://localhost:5502",
-    ],
+    ])
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=frontend_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

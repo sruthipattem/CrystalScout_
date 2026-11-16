@@ -1,0 +1,26 @@
+services:
+  - type: web
+    name: crystalscout-api
+    runtime: python
+    plan: 0.5c-512mb
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    disk:
+      name: crystalscout-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.10
+      - key: CRYSTALSCOUT_ENV
+        value: production
+      - key: CRYSTALSCOUT_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        value: sqlite:////var/data/crystalscout.db
+      - key: CRYSTALSCOUT_MODEL_PATH
+        value: /var/data/crystalscout_extra_trees.joblib
+      - key: FRONTEND_URL
+        sync: false

@@ -113,6 +113,8 @@ def passes_project_filters(doc: Any) -> tuple[bool, str | None]:
 
 
 def rank_materials_from_mp(limit: int = 50) -> dict[str, Any]:
+    if not MODEL_PATH.is_file():
+        raise FileNotFoundError("Model file not found. Candidate ranking is unavailable until the trained model is installed.")
     api_key = os.getenv("MP_API_KEY", "").strip()
     if not api_key:
         raise RuntimeError("Set the MP_API_KEY environment variable to run a live candidate search.")

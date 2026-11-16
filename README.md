@@ -10,11 +10,11 @@ CrystalScout is a local research prototype for screening lithium-containing crys
 
 ## Run it on Windows
 
-Use Python 3.11 for the materials-science packages. Open PowerShell in this `CrystalScout` folder and run:
+Use Python 3.12 for the materials-science packages (verified with 3.12.10). Open PowerShell in this `CrystalScout` folder and run:
 
 ```powershell
 cd backend
-py -3.11 -m venv .venv
+py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install --upgrade pip
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
 .\.venv\Scripts\python.exe train_model.py
@@ -39,10 +39,22 @@ Keep that backend window open. Open a second PowerShell window in the project fo
 
 ```powershell
 cd frontend
-py -3.11 -m http.server 5500
+py -3.12 -m http.server 5500
 ```
 
 Then visit `http://127.0.0.1:5500`. Create a new account in this copy of the app, since the existing project database was not copied. The backend creates a new `crystalscout.db` file when it starts.
+
+## Render backend preparation
+
+The root `render.yaml` defines one Python web service with `rootDir: backend`, Python 3.12.10, `pip install -r requirements.txt`, the `uvicorn main:app --host 0.0.0.0 --port $PORT` start command, and `/api/health` as its health check. It does not run model training. The health route returns HTTP 200 when the service is running and reports model readiness separately.
+
+Set `FRONTEND_URL` in Render to the deployed frontend's exact origin (scheme and host, without a path). Multiple explicit origins can be comma-separated. CORS credentials are enabled only for configured origins; localhost origins are added only when `CRYSTALSCOUT_ENV=development`. The deployed service uses `CRYSTALSCOUT_ENV=production` and a generated `CRYSTALSCOUT_SECRET_KEY`. `MP_API_KEY` is optional for startup and CIF parsing; set it in Render only to enable live Materials Project lookup and ranking.
+
+`DATABASE_URL` supports SQLite file URLs only. The Render Blueprint points it to `sqlite:////var/data/crystalscout.db` and mounts a 1 GB persistent disk at `/var/data`. This standalone mount does not cover the source tree. A persistent disk requires a paid Render web service and limits the service to one instance; without it, SQLite history is lost on restart or redeploy. PostgreSQL URLs are not supported by the current `sqlite3` backend.
+
+CIF uploads are parsed in memory and are not saved as files. Screening history stores prediction fields and the uploaded filename, not the CIF contents. The running API does not create report files; `train_model.py` writes `backend/models/metrics.json` if training is run. The Render build does not run training, and files written outside `/var/data` are ephemeral across restarts and deploys.
+
+The trained model and OBELiX train/test CSVs are not included in the repository. The backend starts without them and `/api/health` reports `model.ready=false`. CIF predictions, Materials Project predictions, and candidate ranking require the real trained model; live Materials Project requests also require `MP_API_KEY`. No model or dataset is fabricated by the Render build.
 
 ## Screening workflow
 
